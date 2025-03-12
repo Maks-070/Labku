@@ -1,0 +1,11 @@
+const printNameVertically = (surname, name) => {
+    return () => {
+        const fullName = `${surname} ${name}`;
+        for (let char of fullName) {
+            console.log(char);
+        }
+    };
+};
+
+const printStudent = printNameVertically("Бомба ", "Максим");
+printStudent();
