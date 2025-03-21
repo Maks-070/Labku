@@ -1,0 +1,4 @@
+const firstName = "максим";
+const lastName = "бомба";
+
+console.log(lastName.toUpperCase() + " " + firstName.toLowerCase());
