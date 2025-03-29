@@ -1,0 +1,80 @@
+
+class TransportVehicle {
+    constructor(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+
+    getInformation() {
+        return `${this.brand} ${this.model}, ${this.year}`;
+    }
+
+    getServiceCost() {
+        throw new Error("Method 'getServiceCost()' must be implemented.");
+    }
+
+    static getCurrentYear() {
+        return new Date().getFullYear();
+    }
+}
+
+class Car extends TransportVehicle {
+    constructor(brand, model, year, doors) {
+        super(brand, model, year);
+        this.doors = doors;
+    }
+
+    getServiceCost() {
+        return (TransportVehicle.getCurrentYear() - this.year) * 200;
+    }
+
+    getInformation() {
+        return `${super.getInformation()}, Doors: ${this.doors}`;
+    }
+}
+
+class Motorcycle extends TransportVehicle {
+    constructor(brand, model, year, type) {
+        super(brand, model, year);
+        this.type = type;
+    }
+
+    getServiceCost() {
+        return (TransportVehicle.getCurrentYear() - this.year) * 100;
+    }
+
+    getInformation() {
+        return `${super.getInformation()}, Type: ${this.type}`;
+    }
+}
+
+class Garage {
+    constructor() {
+        this.vehicles = [];
+    }
+
+    addVehicle(vehicle) {
+        if (vehicle instanceof TransportVehicle) {
+            this.vehicles.push(vehicle);
+        } else {
+            console.log("Invalid vehicle type");
+        }
+    }
+
+    getTotalServiceCost() {
+        return this.vehicles.reduce((total, vehicle) => total + vehicle.getServiceCost(), 0);
+    }
+
+    showGarageInfo() {
+        this.vehicles.forEach(vehicle => console.log(vehicle.getInformation()));
+    }
+}
+
+const garage = new Garage();
+garage.addVehicle(new Car("Toyota", "Camry", 2015, 4));
+garage.addVehicle(new Motorcycle("Honda", "CBR600RR", 2018, "Sport"));
+garage.addVehicle(new Car("BMW", "X5", 2020, 5));
+
+garage.showGarageInfo();
+console.log("Total service cost:", garage.getTotalServiceCost());
