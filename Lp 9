@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Print Info') {
+            steps {
+                script {
+                    def firstName = 'Максим'
+                    def lastName = 'Бомба'
+                    echo "My name is: ${firstName} ${lastName}"
+                }
+            }
+        }
+    }
+}
