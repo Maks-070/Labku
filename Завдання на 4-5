@@ -1,0 +1,79 @@
+<?php
+
+// Інтерфейс для тварин, які можуть говорити
+interface TalkingAnimal {
+    public function sayHello();
+}
+
+// Трейт, який додає муркотіння
+trait CanPurr {
+    public function purr() {
+        echo "Муррр...\n";
+    }
+}
+
+// Базовий клас для тварин
+class Animal {
+    protected $name;
+
+    public function __construct($name) {
+        $this->name = $name;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+}
+
+// Клас для котів
+class Cat extends Animal implements TalkingAnimal {
+    use CanPurr;
+
+    private $color;
+
+    public function __construct($name, $color) {
+        parent::__construct($name);
+        $this->color = $color;
+    }
+
+    // Геттер
+    public function getColor() {
+        return $this->color;
+    }
+
+    // Сетер (якщо совість дозволяє 😹)
+    public function setColor($color) {
+        $this->color = $color;
+    }
+
+    // Реалізація інтерфейсу
+    public function sayHello() {
+        echo "Мяу! Мене звати {$this->name}, я {$this->color} котик.\n";
+    }
+}
+
+// Інший клас тварини — Єнот
+class Raccoon extends Animal implements TalkingAnimal {
+    public function sayHello() {
+        echo "Привіт! Я єнот усурійський — Nyctereutes procyonoides.\n";
+    }
+}
+
+// ---------- Демонстрація ----------
+
+// Створюємо котів
+$snowball = new Cat("Сніжок", "білий");
+$barsik = new Cat("Барсик", "рудий");
+
+// Виводимо інформацію
+$snowball->sayHello();
+$snowball->purr();
+
+$barsik->sayHello();
+$barsik->purr();
+
+// Створюємо єнота
+$enot = new Raccoon("Єнотик");
+$enot->sayHello();
+
+?>
