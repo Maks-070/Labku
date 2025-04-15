@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Робота з кнопками</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .item {
+            margin: 10px;
+        }
+        .discounted {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Магазин</h1>
+
+    <div>
+        <button id="showWithDiscounts">Показати зі знижками</button>
+        <button id="showWithoutDiscounts">Показати без знижок</button>
+    </div>
+
+    <div id="items">
+        <div class="item discounted" data-price="100">
+            Товар 1 - <span class="price">100 грн</span>
+        </div>
+        <div class="item discounted" data-price="200">
+            Товар 2 - <span class="price">200 грн</span>
+        </div>
+        <div class="item" data-price="150">
+            Товар 3 - <span class="price">150 грн</span>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#showWithDiscounts').click(function() {
+                $('.discounted').each(function() {
+                    var originalPrice = $(this).data('price');
+                    var discountedPrice = originalPrice * 0.8; // Знижка 20%
+                    $(this).find('.price').text(discountedPrice + ' грн');
+                });
+            });
+
+            $('#showWithoutDiscounts').click(function() {
+                $('.discounted').each(function() {
+                    var originalPrice = $(this).data('price');
+                    $(this).find('.price').text(originalPrice + ' грн');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
