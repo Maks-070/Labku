@@ -1,0 +1,33 @@
+// calculator.test.js
+
+const { calculate } = require('./calculator'); // Припускаємо, що ваш код знаходиться в calculator.js
+
+describe('calculate', () => {
+  test('перевірка обчислення з h = 1.58 та t = 1.31', () => {
+    document.body.innerHTML = `
+      <input type="number" id="h" value="1.58">
+      <input type="number" id="t" value="1.31">
+      <div id="result"></div>
+    `;
+
+    calculate();
+
+    const resultDiv = document.getElementById('result');
+    expect(resultDiv.innerHTML).toContain('f = 4.41'); // Приблизне значення f
+    expect(resultDiv.innerHTML).toContain('z = 1.36'); // Приблизне значення z
+  });
+
+  test('перевірка обчислення з іншими значеннями h та t', () => {
+    document.body.innerHTML = `
+      <input type="number" id="h" value="2">
+      <input type="number" id="t" value="0">
+      <div id="result"></div>
+    `;
+
+    calculate();
+
+    const resultDiv = document.getElementById('result');
+    expect(resultDiv.innerHTML).toContain('f = 7.43'); // Приблизне значення f
+    expect(resultDiv.innerHTML).toContain('z = 1.25'); // Приблизне значення z
+  });
+});
