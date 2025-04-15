@@ -1,0 +1,41 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # Або інша гілка, з якої ви хочете виконувати деплой
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'  # або інша версія, яка вам потрібна
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y maven  # або інші залежності
+
+    - name: Build the project
+      run: mvn clean install  # або інша команда для вашого проекту
+
+    - name: Upload SSH private key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}  # Використовуйте секретний ключ з налаштувань GitHub Secrets
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+          cd /home/ec2-user/javatestapp
+          git pull origin main
+          mvn clean install
+          java -jar target/javatestapp.jar  # Замість цього команду залежно від вашого додатку
+        EOF
