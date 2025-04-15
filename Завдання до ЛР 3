@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Ваші дані
-INITIALS="IV"
-FIRSTNAME="Ivan"
-LASTNAME="Ivanov"
-GROUP="КН-42"
+INITIALS="BMU"
+FIRSTNAME="Maks"
+LASTNAME="Bomba"
+GROUP="КI-405"
 DATE="15.04.2025"
-EMAIL="ivan.ivanov@example.com"
+EMAIL="bombamaksim45@gmail.com"
 
 # Кореневий каталог
 ROOT_DIR="${INITIALS}_dir"
