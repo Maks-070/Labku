@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма вводу товару</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .form-container input, .form-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        /* Стиль для модального вікна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Введіть дані про товар</h2>
+
+    <!-- Кнопка для відкриття модального вікна -->
+    <button id="openModalBtn">Ввести дані товару в модальне вікно</button>
+
+    <!-- Модальне вікно -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Форма вводу товару</h2>
+            <form id="modalForm">
+                <label for="productName">Назва товару:</label>
+                <input type="text" id="productName" required><br><br>
+
+                <label for="productQuantity">Кількість товару:</label>
+                <input type="number" id="productQuantity" required><br><br>
+
+                <label for="productPrice">Ціна товару:</label>
+                <input type="number" id="productPrice" required><br><br>
+
+                <button type="submit">Ввести дані</button>
+            </form>
+            <div id="resultModal"></div>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Інший варіант введення даних</h2>
+        <form id="productForm">
+            <label for="productNameInput">Назва товару:</label>
+            <input type="text" id="productNameInput" required><br><br>
+
+            <label for="productQuantityInput">Кількість товару:</label>
+            <input type="number" id="productQuantityInput" required><br><br>
+
+            <label for="productPriceInput">Ціна товару:</label>
+            <input type="number" id="productPriceInput" required><br><br>
+
+            <button type="submit">Ввести дані</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Модальне вікно
+        const modal = document.getElementById("myModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementsByClassName("close")[0];
+
+        // Відкриття модального вікна
+        openModalBtn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // Закриття модального вікна
+        closeModalBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Закриття модального вікна при натисканні поза ним
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Обробка форми в модальному вікні
+        document.getElementById("modalForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const productName = document.getElementById("productName").value;
+            const productQuantity = document.getElementById("productQuantity").value;
+            const productPrice = document.getElementById("productPrice").value;
+
+            document.getElementById("resultModal").innerHTML = `
+                <h3>Привіт! Ви ввели наступні дані:</h3>
+                <p>Назва товару: ${productName}</p>
+                <p>Кількість товару: ${productQuantity}</p>
+                <p>Ціна товару: ${productPrice} грн.</p>
+            `;
+        });
+
+        // Обробка форми поза модальним вікном
+        document.getElementById("productForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const productNameInput = document.getElementById("productNameInput").value;
+            const productQuantityInput = document.getElementById("productQuantityInput").value;
+            const productPriceInput = document.getElementById("productPriceInput").value;
+
+            document.getElementById("result").innerHTML = `
+                <h3>Привіт! Ви ввели наступні дані:</h3>
+                <p>Назва товару: ${productNameInput}</p>
+                <p>Кількість товару: ${productQuantityInput}</p>
+                <p>Ціна товару: ${productPriceInput} грн.</p>
+            `;
+        });
+    </script>
+
+</body>
+</html>
