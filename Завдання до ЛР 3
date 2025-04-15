@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Ваші дані
+INITIALS="IV"
+FIRSTNAME="Ivan"
+LASTNAME="Ivanov"
+GROUP="КН-42"
+DATE="15.04.2025"
+EMAIL="ivan.ivanov@example.com"
+
+# Кореневий каталог
+ROOT_DIR="${INITIALS}_dir"
+mkdir -p "$ROOT_DIR"
+
+# Створення дерева каталогів з файлами
+for i in {1..3}; do
+    SUBDIR="$ROOT_DIR/dir_$i"
+    mkdir -p "$SUBDIR"
+
+    # Створення файлу з іменем
+    echo "$GROUP, $DATE" > "$SUBDIR/$FIRSTNAME.txt"
+
+    # Створення файлу з прізвищем
+    echo "$EMAIL" > "$SUBDIR/$LASTNAME.txt"
+done
+
+# Копіювання всіх файлів з підкаталогів у кореневу директорію
+find "$ROOT_DIR" -mindepth 2 -type f -exec cp {} "$ROOT_DIR" \;
+
+# Перевірка: чи є email у файлах з ім’ям
+echo -e "\nПеревірка email у файлах з іменем:"
+for file in "$ROOT_DIR"/dir_*/"$FIRSTNAME.txt"; do
+    if grep -Eq "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" "$file"; then
+        echo "$file: знайдено email"
+    else
+        echo "$file: email не знайдено"
+    fi
+done
+
+# Завантаження на GitHub
+# Користувач повинен сам виконати такі команди після створення репозиторію:
+# git init
+# git add ivanov.sh
+# git commit -m "Add bash script for task"
+# git branch -M main
+# git remote add origin <URL-до-вашого-репозиторію>
+# git push -u origin main
+
+# Пошук 404 у логах Apache
+LOG_FILE="/var/log/apache2/access.log"
+if [ -f "$LOG_FILE" ]; then
+    echo -e "\nПовідомлення про помилки 404:"
+    grep " 404 " "$LOG_FILE"
+    echo -e "\nЗагальна кількість помилок 404:"
+    grep -c " 404 " "$LOG_FILE"
+else
+    echo -e "\nФайл логів Apache не знайдено: $LOG_FILE"
+fi
